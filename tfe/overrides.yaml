@@ -1,0 +1,58 @@
+replicaCount: ${replica_count}
+tls:
+  certData: ${cert_data}
+  keyData: ${key_data}
+  caCertData: ${ca_cert_data}
+image:
+  repository: images.releases.hashicorp.com
+  name: hashicorp/terraform-enterprise
+  tag: ${tfe_release}
+service:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /_health_check  
+
+serviceAccount:
+  enabled: true
+  name: "terraform-enterprise"
+  annotations:
+    azure.workload.identity/client-id: ${client_id_oidc}
+  labels:
+    azure.workload.identity/use: "true"
+pod:
+  serviceAccountName: "terraform-enterprise"
+  labels:
+    azure.workload.identity/use: "true"
+agents:
+  rbac:
+    enabled: true    
+
+
+env:
+  variables:
+    TFE_HOSTNAME: ${fqdn}
+    TFE_IACT_SUBNETS: "0.0.0.0/0"
+
+    # Database Settings
+    TFE_DATABASE_USER: ${pg_user}
+    TFE_DATABASE_PASSWORD: ${pg_password}
+    TFE_DATABASE_HOST: ${pg_address}
+    TFE_DATABASE_NAME: ${pg_dbname}
+    TFE_DATABASE_PARAMETERS: "sslmode=require"
+    
+    # Redis settings
+    TFE_REDIS_HOST: ${redis_host}
+    TFE_REDIS_PASSWORD: ${redis_primary_access_key}
+    TFE_REDIS_USE_AUTH: true
+    
+    # Object storage settings.
+    TFE_OBJECT_STORAGE_TYPE: "azure"
+
+    TFE_OBJECT_STORAGE_AZURE_ACCOUNT_NAME: ${storage_account}
+    TFE_OBJECT_STORAGE_AZURE_CONTAINER: ${container_name}
+    TFE_OBJECT_STORAGE_AZURE_USE_MSI: false
+    TFE_OBJECT_STORAGE_AZURE_ACCOUNT_KEY: bmljb2tub3dzYmVzdAo=            # added because of a bug in TFE 202410-1
+    # TFE_OBJECT_STORAGE_AZURE_ACCOUNT_KEY: ${storage_account_key}        # Uncomment this line if you are using account key otherwise workload identity will be used.
+  secrets:
+    TFE_DATABASE_PASSWORD: ${pg_password}
+    TFE_ENCRYPTION_PASSWORD:  ${enc_password}
+    TFE_LICENSE: ${tfe_license}
