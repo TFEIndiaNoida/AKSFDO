@@ -24,7 +24,7 @@ Make sure helm is available on your system. Please see the documentation [here](
 
 - Clone this repository
 ```
-https://github.com/munnep/tfe_fdo_azure_external_kubernetes
+https://github.com/TFEIndiaNoida/AKSFDO.git
 ```
 - Set your AWS credentials
 ```
