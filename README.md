@@ -122,8 +122,7 @@ tfe_application_url = "https://tfeeks.tf-support.hashicorpdemo.com"
 - Execute the `configure_tfe.sh tfeeks.tf-support.hashicorpdemo.com ramit.bansal@hashicorp.com Password#1` script to do the following
   - Create a user called admin with the password specified
   - Create an organization called test
-- login to the application on url https://tfe19.aws.munnep.com
-
+- login to the application on url https://tfeeks.tf-support.hashicorpdemo.com
 ## Extra notes
 
 - Documentation about the Internal Load balancer on Azure can be found [here](https://learn.microsoft.com/en-us/azure/aks/internal-lb?tabs=set-service-annotations#create-an-internal-load-balancer)
